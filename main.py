@@ -42,7 +42,11 @@ def main():
     if len(lines) != 2:
         raise SystemExit("entry text must be exactly two lines, got %d" % len(lines))
     if any(not line.strip() for line in lines):
-        raise SystemExit("entry lines must not be empty")
+        raise SystemExit("entry lines must not be empty or whitespace-only")
+    if any(line != line.strip() for line in lines):
+        raise SystemExit(
+            "entry lines must not have leading or trailing whitespace"
+        )
 
     path = resolve_output_path()
     parent = os.path.dirname(path)
